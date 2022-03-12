@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from .services.validators import register_validations
 from .services.auth_services import save_user
-from src.constants.http_codes import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from src.constants.http_codes import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_500_INTERNAL_SERVER_ERROR
 from .constants import BASE_AUTH_URL
 
 
@@ -26,4 +26,4 @@ def register():
                         }}), HTTP_201_CREATED
     return jsonify({"error": {
         "message": "Something went wrong on the server, please try again later"
-    }}), HTTP_400_BAD_REQUEST
+    }}), HTTP_500_INTERNAL_SERVER_ERROR
