@@ -32,3 +32,19 @@ def register_validations(body: dict):
 
     if len(password) < 6:
         return "Password can't be lesser than 6 characters"
+
+
+def login_validators(body: dict):
+    email: str = body.get('email', None)
+    password: str = body.get('password', None)
+    if email is None:
+        return 'Email is required'
+
+    if not validators.email(email):
+        return 'Invalid email'
+
+    if password is None:
+        return 'Password is required'
+
+    if len(password) < 6:
+        return "Password can't be lesser than 6 characters"
