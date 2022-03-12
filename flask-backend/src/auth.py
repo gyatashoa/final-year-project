@@ -1,8 +1,9 @@
 from flask import Blueprint, jsonify, request
 from .services.validators import register_validations, login_validators
-from .services.auth_services import save_user, check_login_credentials
+from .services.auth_services import save_user, check_login_credentials, get_user_details
 from src.constants.http_codes import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_500_INTERNAL_SERVER_ERROR
 from .constants import BASE_AUTH_URL
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 auth = Blueprint("auth", __name__, url_prefix=BASE_AUTH_URL)
@@ -40,3 +41,11 @@ def login():
             }
         }), HTTP_400_BAD_REQUEST
     return check_login_credentials(request.json)
+
+
+@auth.get('profile/')
+@auth.get('profile')
+@jwt_required()
+def get_user_profile():
+    user_id = get_jwt_identity()
+    return jsonify(get_user_details(user_id)), HTTP_200_OK

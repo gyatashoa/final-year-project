@@ -19,3 +19,13 @@ class User(db.Model):
 
     def __repr__(self) -> str:
         return f"<User {self.email}>"
+
+    def transform_user_to_dict(self):
+        return {
+            'email': self.email,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'other_name': self.other_name,
+            'dob': self.dob,
+            'gender': self.gender,
+        }

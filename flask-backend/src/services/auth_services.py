@@ -6,7 +6,7 @@ from datetime import datetime
 from src.database import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_refresh_token, create_access_token
-from src.constants.http_codes import HTTP_202_ACCEPTED,HTTP_400_BAD_REQUEST 
+from src.constants.http_codes import HTTP_202_ACCEPTED, HTTP_400_BAD_REQUEST
 
 
 def save_user(body: dict):
@@ -51,7 +51,12 @@ def check_login_credentials(body: dict):
                     'refresh': refresh,
                     'access': access
                 }
-            }),HTTP_202_ACCEPTED
+            }), HTTP_202_ACCEPTED
     return jsonify({'error': {
         'message': 'Invalid credentials'
-    }}),HTTP_400_BAD_REQUEST
+    }}), HTTP_400_BAD_REQUEST
+
+
+def get_user_details(user_id: int):
+    user: User = User.query.filter_by(id=user_id).first()
+    return {'data': user.transform_user_to_dict()}
