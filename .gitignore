@@ -179,6 +179,17 @@ cython_debug/
 .history
 .ionide
 
+#vscode config for flask backend
+
+flask-backend/.vscode/*
+
 # Support for Project snippet scope
 
 # End of https://www.toptal.com/developers/gitignore/api/flask,visualstudiocode
+flask-backend/.vscode/launch.json
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IPython
+profile_default/
+ipython_config.py
