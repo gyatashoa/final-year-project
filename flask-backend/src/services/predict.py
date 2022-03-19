@@ -5,21 +5,28 @@ import json
 __symptom_headers: list[str] = None
 __model = None
 
+__path_to_artifacts = os.path.join(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))), 'artifacts')
 
-def load_artifacts():
+
+def load_symptoms():
     global __symptom_headers
-    global __model
-    with open(os.path.join(os.path.dirname(os.getcwd()), 'artifacts', 'symptom_columns.json'), 'r') as f:
+    with open(os.path.join(__path_to_artifacts, 'symptom_columns.json'), 'r') as f:
         __symptom_headers = json.load(f)['symptom_names']
 
-    with open(os.path.join(os.path.dirname(os.getcwd()), 'artifacts', 'mnb_model.pickle'), 'rb') as m:
+
+def load_model():
+    with open(os.path.join(__path_to_artifacts, 'mnb_model.pickle'), 'rb') as m:
         __model = pickle.load(m)
 
 
 def make_prediction(symptoms: list[str]):
     encoded_values: list[int] = []
-    if __symptom_headers is None or __model is None:
-        load_artifacts()
+    if __symptom_headers is None:
+        load_symptoms()
+
+    if __model is None:
+        load_model()
 
     for s in __symptom_headers:
         try:
@@ -33,5 +40,9 @@ def make_prediction(symptoms: list[str]):
 
 def get_symptoms():
     if __symptom_headers is None:
-        load_artifacts()
+        load_symptoms()
     return __symptom_headers
+
+
+print(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(
+    __file__))), 'artifacts', 'mnb_model.pickle'))
