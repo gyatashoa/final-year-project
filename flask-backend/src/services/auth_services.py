@@ -1,5 +1,5 @@
-import email
-
+from datetime import timedelta
+import os
 from flask import jsonify
 from src.database import db
 from datetime import datetime
@@ -36,8 +36,12 @@ def check_login_credentials(body: dict):
     if user:
         is_pass_correct = check_password_hash(user.password, password)
         if is_pass_correct:
-            access = create_access_token(user.id)
-            refresh = create_refresh_token(user.id)
+            access = create_access_token(
+                user.id, expires_delta=timedelta(days=os.environ.get(
+                    'JWT_ACCESS_TOKEN_EXPIRES'
+                )))
+            refresh = create_refresh_token(
+                user.id, expires_delta=timedelta(days=os.environ.get('JWT_REFRESH_TOKEN_EXPIRES')))
             return jsonify({
                 'user': {
                     'email': user.email,
