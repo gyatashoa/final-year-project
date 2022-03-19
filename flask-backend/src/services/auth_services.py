@@ -37,11 +37,11 @@ def check_login_credentials(body: dict):
         is_pass_correct = check_password_hash(user.password, password)
         if is_pass_correct:
             access = create_access_token(
-                user.id, expires_delta=timedelta(days=os.environ.get(
+                user.id, expires_delta=timedelta(days=int(os.environ.get(
                     'JWT_ACCESS_TOKEN_EXPIRES'
-                )))
+                ))))
             refresh = create_refresh_token(
-                user.id, expires_delta=timedelta(days=os.environ.get('JWT_REFRESH_TOKEN_EXPIRES')))
+                user.id, expires_delta=timedelta(days=int(os.environ.get('JWT_REFRESH_TOKEN_EXPIRES'))))
             return jsonify({
                 'user': {
                     'email': user.email,

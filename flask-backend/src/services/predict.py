@@ -16,6 +16,7 @@ def load_symptoms():
 
 
 def load_model():
+    global __model
     with open(os.path.join(__path_to_artifacts, 'mnb_model.pickle'), 'rb') as m:
         __model = pickle.load(m)
 
