@@ -1,4 +1,5 @@
 from datetime import datetime
+from tkinter import dnd
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -29,3 +30,11 @@ class User(db.Model):
             'dob': self.dob,
             'gender': self.gender,
         }
+
+
+class Prediction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    person_id = db.Column(db.Integer, db.ForeignKey('person.id'))
+    disease_name = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)

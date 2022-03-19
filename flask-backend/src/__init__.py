@@ -1,5 +1,6 @@
 from flask import Flask
 from src.auth import auth
+from src.predictions import predictions
 from src.database import db
 import os
 from flask_jwt_extended import JWTManager
@@ -22,5 +23,6 @@ def create_app(test_config=None):
     db.init_app(app)
 
     JWTManager(app)
+    app.register_blueprint(auth)
     app.register_blueprint(auth)
     return app
