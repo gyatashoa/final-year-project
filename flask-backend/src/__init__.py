@@ -24,5 +24,5 @@ def create_app(test_config=None):
 
     JWTManager(app)
     app.register_blueprint(auth)
-    app.register_blueprint(auth)
+    app.register_blueprint(predictions)
     return app
